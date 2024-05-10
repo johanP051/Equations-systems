@@ -1,115 +1,118 @@
 import numpy as np
-import pandas as pd
+
+class SistemaEcuaciones:
+    def __init__(self, ecuaciones, variables):
+        self.ecuaciones = ecuaciones
+        self.variables = variables
+        self.filas = []
+        self.matrizReducir = None
+
+    def recoger_datos(self):
+        for i in range(self.ecuaciones):
+            elementosFila = []
+            print(f"\nPara la ecuación número {i + 1}:")
+
+            for j in range(self.variables):
+                Xn = int(input(f"Inserte el valor de X{j + 1}: "))
+                elementosFila.extend([Xn])
+
+            igualdad = int(input(f"¿A qué valor está igualada la ecuación?: "))
+            elementosFila.extend([igualdad])
+
+            self.filas.append(elementosFila)
+
+    def resolver(self):
+        if self.ecuaciones != self.variables:
+            print("El sistema no se puede solucionar porque el número de ecuaciones es diferente al número de variables.")
+            return
+
+        mAumentada = np.array(self.filas, dtype='float')
+        print(f"\nLa matriz aumentada es:\n\n{mAumentada}")
+
+        self.matrizReducir = mAumentada.copy()
+
+        print("\nPrimera parte del Gauss-Jordan\n")
+        self.gauss_jordan()
+
+    def gauss_jordan(self):
+        inicioFilaSimplificacion = -1
+        finalFilaSimplificacion = self.ecuaciones
+        elementoFilaSimplificacion = -1
+
+        inicioFilaReduccion = 0
+        finalFilaReduccion = self.ecuaciones
+        filaPivote = -1
+
+        columnas = self.variables
+
+        while columnas >= 1:
+            inicioFilaSimplificacion += 1
+            finalFS = finalFilaSimplificacion
+            elementoFilaSimplificacion += 1
+
+            for filaS in range(inicioFilaSimplificacion, finalFS):
+                filaSimplificada = self.matrizReducir[filaS]
+                filaSimplificada = filaSimplificada / filaSimplificada[elementoFilaSimplificacion]
+                self.matrizReducir[filaS] = filaSimplificada
+
+            print(f"\nResultado de la simplificación: ")
+            print(self.matrizReducir)
+
+            inicioFilaReduccion += 1
+            finalFR = finalFilaReduccion
+            filaPivote += 1
+
+            for filaR in range(inicioFilaReduccion, finalFR):
+                filaReducida = self.matrizReducir[filaR]
+                filaReducida = filaReducida - self.matrizReducir[filaPivote]
+                self.matrizReducir[filaR] = filaReducida
+
+            print(f"\nResultado de la Reducción: \n{self.matrizReducir}")
+
+            columnas -= 1
+
+        print("\nSegunda parte del Gauss Jordan:")
+        self.gauss_jordan_segunda_parte()
+
+    def gauss_jordan_segunda_parte(self):
+        inicioFilaSimplificacion = 0
+        finalFilaSimplificacion = self.ecuaciones
+        elementoFilaSimplificacion = self.variables
+
+        inicioFilaReduccion = 0
+        finalFilaReduccion = self.ecuaciones
+        filaPivote = self.ecuaciones
+
+        columnas = self.variables
+
+        while columnas >= 1:
+            inicioFS = inicioFilaSimplificacion
+            finalFilaSimplificacion -= 1
+            elementoFilaSimplificacion -= 1
+
+            for filaS in reversed(range(inicioFS, finalFilaSimplificacion + 1)):
+                filaSimplificada = self.matrizReducir[filaS]
+                filaSimplificada = filaSimplificada / filaSimplificada[elementoFilaSimplificacion]
+                self.matrizReducir[filaS] = filaSimplificada
+
+            print(f"\nResultado de la simplificación: ")
+            print(self.matrizReducir)
+
+            inicioFR = inicioFilaReduccion
+            finalFilaReduccion -= 1
+            filaPivote -= 1
+
+            for filaR in reversed(range(inicioFR, finalFilaReduccion)):
+                filaReducida = self.matrizReducir[filaR]
+                filaReducida = filaReducida - self.matrizReducir[filaPivote]
+                self.matrizReducir[filaR] = filaReducida
+
+            print(f"\nResultado de la Reducción: \n{self.matrizReducir}")
+            columnas -= 1
 
 ecuaciones = int(input("Inserte el número de ecuaciones: "))
 variables = int(input("Inserte el número de variables: "))
 
-filas = []
-
-for i in range(ecuaciones):
-    elementosFila = []
-    print(f"\nPara la ecuación número {i + 1}:")
-
-    for j in range(variables):
-        Xn = int(input(f"Inserte el valor de X{j + 1}: "))
-        elementosFila.extend([Xn])
-
-    igualdad = int(input(f"¿A qué valor está igualada la ecuación?: "))
-    elementosFila.extend([igualdad])
-
-    filas.append(elementosFila)
-
-
-mAumentada = np.array(filas, dtype='float')
-print(f"\nLa matriz aumentada es:\n\n{mAumentada}")
-
-matrizReducir = mAumentada.copy()
-
-print("\nPrimera parte del Gauss-Jordan\n")
-
-inicioFilaSimplificacion = -1
-finalFilaSimplificacion = ecuaciones
-elementoFilaSimplificacion = -1
-
-inicioFilaReduccion = 0
-finalFilaReduccion = ecuaciones
-filaPivote = -1
-
-columnas = variables
-
-
-while columnas >= 1:
-    inicioFilaSimplificacion += 1
-    finalFS = finalFilaSimplificacion
-    elementoFilaSimplificacion += 1
-
-    for filaS in range(inicioFilaSimplificacion, finalFS):
-        filaSimplificada = matrizReducir[filaS]
-        filaSimplificada = filaSimplificada / filaSimplificada[elementoFilaSimplificacion]
-        matrizReducir[filaS] = filaSimplificada
-
-    print(f"\nResultado de la simplificación: ")
-    print(matrizReducir)
-
-
-    inicioFilaReduccion += 1
-    finalFR = finalFilaReduccion
-    filaPivote += 1
-
-    for filaR in range(inicioFilaReduccion, finalFR):
-        filaReducida = matrizReducir[filaR]
-        filaReducida = filaReducida - matrizReducir[filaPivote]
-        matrizReducir[filaR] = filaReducida
-
-    print(f"\nResultado de la Reducción: \n{matrizReducir}")
-
-    columnas -= 1
-
-print("\nSegunda parte del Gauss Jordan:")
-
-inicioFilaSimplificacion = 0
-finalFilaSimplificacion = ecuaciones
-elementoFilaSimplificacion = variables
-
-inicioFilaReduccion = 0 #constante
-finalFilaReduccion = ecuaciones
-filaPivote = ecuaciones
-
-columnas = variables
-
-while columnas >= 1:
-    
-    inicioFS = inicioFilaSimplificacion
-    finalFilaSimplificacion -= 1
-    elementoFilaSimplificacion -= 1
-    print(f"e.Simplificacion: {elementoFilaSimplificacion}")
-
-    for filaS in reversed(range(inicioFS, finalFilaSimplificacion + 1)):
-        filaSimplificada = matrizReducir[filaS]
-        print(f"fila a simplificar: {filaSimplificada}")
-        filaSimplificada = filaSimplificada / filaSimplificada[elementoFilaSimplificacion]
-        matrizReducir[filaS] = filaSimplificada
-
-    print(f"\nResultado de la simplificación: ")
-    print(matrizReducir)
-
-    #Por cual fila voy a a empezar a reducir?
-    inicioFR = inicioFilaReduccion
-    #En cual fila voy a terminar de reducir?
-    finalFilaReduccion -= 1
-    #Qué fila voy a usar para reducir?
-    filaPivote -= 1
-
-    # Va de 0 hasta finalFilaReduccion - 1, en caso de dos ecuaciones va de 0 a 1, pero como no incluye al 1, entonces solo va de 0 a 0
-    for filaR in reversed(range(inicioFR, finalFilaReduccion)):
-        #filaR = finalFR - 1 - 1
-        filaReducida = matrizReducir[filaR]
-        filaReducida = filaReducida - matrizReducir[filaPivote]
-        #print(f"Indice: {filaR}, reduccion de la fila: {filaReducida}")
-        matrizReducir[filaR] = filaReducida
-
-    print(f"\nResultado de la Reducción: \n{matrizReducir}")
-    columnas -= 1
-
-
-
+sistema = SistemaEcuaciones(ecuaciones, variables)
+sistema.recoger_datos()
+sistema.resolver()
