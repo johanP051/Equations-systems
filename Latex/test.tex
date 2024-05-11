@@ -1,0 +1,72 @@
+\documentclass[letterpaper,12pt]{article}
+\usepackage{listings}
+
+\lstset{language=Python, 
+    basicstyle=\ttfamily,
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{green}\ttfamily,
+    morecomment=[l][\color{magenta}]{\#}
+}
+
+\usepackage{tabularx} % extra features for tabular environment
+\usepackage{amsmath}  % improve math presentation
+\usepackage{graphicx} % takes care of graphic including machinery
+\usepackage[margin=1in,letterpaper]{geometry} % decreases margins
+\usepackage{cite} % takes care of citations
+\usepackage[final]{hyperref} % adds hyper links inside the generated pdf file
+\hypersetup{
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=blue,        % color of internal links
+    citecolor=blue,        % color of links to bibliography
+    filecolor=magenta,     % color of file links
+    urlcolor=blue         
+}
+\usepackage{blindtext}
+%++++++++++++++++++++++++++++++++++++++++
+
+
+\begin{document}
+
+\title{Solución de Sistemas de ecuaciones lineales y factorización LU con Python}
+\author{Johan Posada y Juan Morales}
+\date{Mayo 14 2024}
+\maketitle
+
+\section{Introducción}
+... El objetivo de este documento es explicar cómo se puede construir un programa en Python que permita resolver sistemas de ecuaciones lineales de única solución.
+\section{Construyendo el programa}
+En un principio el programa se había construido sin usar POO, sin embargo se decidió hacer uso de este paradigma de la programación para
+mejorar su estructura. El código se puede acceder en el perfil de GitHub del desarrollador del código: \url{https://github.com/johanP051/Equations-systems.git}
+
+Para empezar, se debe solicitar al usuario que ingrese el número de ecuaciones y el número de variables 
+del sistema que siga la siguiente forma:
+
+\begin{align*}
+    a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n = b_1, \quad
+    \\
+    a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n = b_2, \quad
+    \\
+    a_{n1}x_1 + a_{n2}x_2 + \cdots + a_{nn}x_n = b_n
+    \end{align*}
+
+
+\[
+\left(
+\begin{array}{ccc|c}
+a_{11} & a_{12} & \cdots & b_1 \\
+a_{21} & a_{22} & \cdots & b_2 \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{n1} & a_{n2} & \cdots & b_n \\
+\end{array}
+\right)
+\]
+
+Donde la última columna es el el vector de igualdad.
+
+
+\begin{thebibliography}{99}
+\bibitem{torres_solis}
+Torres Solís, M., Villalobos Castillo, N. (s.f). Factorización LU. Universidad del Bío-Bío. Recuperado de \url{http://repobib.ubiobio.cl/jspui/bitstream/123456789/1811/1/Torres_Solis_Marcos.pdf}
+\end{thebibliography}
+\end{document}
