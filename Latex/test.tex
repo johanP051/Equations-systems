@@ -251,12 +251,14 @@ La matriz simplifcada se puede reducir de nuevo teniendo como pivote la fila 2 (
 \]
 \\
 Después se simplifica la fila 3 para lograr una matriz triangular superior con unos en la diagonal principal y ceros debajo de la diagonal principal.
-De igual manera el algoritmo revisa si hay más filas restantes para reducir, en este caso no hay más filas restantes, por lo que el proceso termina.
-\\
+De igual manera el algoritmo revisa si hay más filas restantes para reducir, en este caso no hay más filas restantes, por lo que la primera parte del proceso termina.
+\\\\
 Si notamos bien, el proceso se hace por cada fila y termina termina cuando las columnas de la matriz de coeficientes se acaba:
-En el paso 1 se simplificó desde la fila 1 hasta la fila 3 y se redujo desde la fila 2 hasta la fila 3.
-En el paso 2 se simplificó desde la fila 2 hasta la fila 3 y se redujo solamente la fila 3.
-En el paso 3 se simplificó solamente la fila 3 y la reducción no se hace, pues en este caso la fila a reducir sería la número 4 y como no existe, entonces el bucle for no se ejecuta.
+\begin{itemize}
+    \item En el paso 1 se simplificó desde la fila 1 hasta la fila 3 y se redujo desde la fila 2 hasta la fila 3.
+    \item En el paso 2 se simplificó desde la fila 2 hasta la fila 3 y se redujo solamente la fila 3.
+    \item En el paso 3 se simplificó solamente la fila 3 y la reducción no se hace, pues en este caso la fila a reducir sería la número 4 y como no existe, entonces el bucle for no se ejecuta.
+\end{itemize}
 \\
 \begin{lstlisting}[style=jupyter, language=Python, caption={Método para resolver el sistema de ecuaciones}]
     def gauss_jordan(self):
@@ -297,8 +299,69 @@ En el paso 3 se simplificó solamente la fila 3 y la reducción no se hace, pues
             print(f"\nResultado de la Reduccion: \n{self.matrizReducir}")
 
             columnas -= 1
+        print("\nSegunda parte del Gauss Jordan:")
+        self.gauss_jordan_segunda_parte()
 
 \end{lstlisting}
+Como se explicó antes, en el método \textcolor{jl_keyword}{gauss\_jordan} se inicializan las variables que se usarán para simplificar y reducir la matriz mientras que el número de variables sea mayor o igual a 1.
+\\\\\begin{lstlisting}[style=jupyter, language=Python, caption={Método para resolver el sistema de ecuaciones}]
+    def gauss_jordan_segunda_parte(self):
+        inicioFilaSimplificacion = 0
+        finalFilaSimplificacion = self.ecuaciones
+        elementoFilaSimplificacion = self.variables
+
+        inicioFilaReduccion = 0
+        finalFilaReduccion = self.ecuaciones
+        filaPivote = self.ecuaciones
+
+        columnas = self.variables
+
+        while columnas >= 1:
+            inicioFS = inicioFilaSimplificacion
+            finalFilaSimplificacion -= 1
+            elementoFilaSimplificacion -= 1
+
+            # Simplificar la fila actual dividiendo por el elemento de la columna correspondiente
+            for filaS in reversed(range(inicioFS, finalFilaSimplificacion + 1)):
+                filaSimplificada = self.matrizReducir[filaS]
+                filaSimplificada = filaSimplificada / filaSimplificada[elementoFilaSimplificacion]
+                self.matrizReducir[filaS] = filaSimplificada
+
+            print(f"\nResultado de la simplificacion: ")
+            print(self.matrizReducir)
+
+            inicioFR = inicioFilaReduccion
+            finalFilaReduccion -= 1
+            filaPivote -= 1
+
+            # Reducir las filas restantes restando la fila pivote multiplicada por el elemento correspondiente
+            for filaR in reversed(range(inicioFR, finalFilaReduccion)):
+                filaReducida = self.matrizReducir[filaR]
+                filaReducida = filaReducida - self.matrizReducir[filaPivote]
+                self.matrizReducir[filaR] = filaReducida
+
+            print(f"\nResultado de la Reduccion: \n{self.matrizReducir}")
+            columnas -= 1
+\end{lstlisting}
+\\
+En el método \textcolor{jl_keyword}{gauss\_jordan\_segunda\_parte} se realiza el mismo proceso que en el método \textcolor{jl_keyword}{gauss\_jordan} pero en sentido contrario, es decir, se simplifica y reduce desde la última fila hasta la primera.
+Python en la función range() crea una lista iterable, desde la primera fila hasta la última, sin embargo, necesitamos iterar desde la última fila hasta la primera, por eso se usa la función reversed() que invierte el orden de la lista.
+\\\\\begin{lstlisting}[style=jupyter, language=Python, caption={Método para resolver el sistema de ecuaciones}]
+    # Solicitar el numero de ecuaciones y variables al usuario
+    ecuaciones = int(input("Inserte el numero de ecuaciones: "))
+    variables = int(input("Inserte el numero de variables: "))
+    
+    # Crear una instancia de la clase SistemaEcuaciones y resolver el sistema
+    sistema = SistemaEcuaciones(ecuaciones, variables)
+    sistema.recoger_datos()
+    sistema.resolver()
+\end{lstlisting}
+
+Por último se crea el objeto sistema, haciendo una instancia a la clase \textcolor{jl_keyword}{SistemaEcuaciones} y se llama al método \textcolor{jl_keyword}{recoger\_datos} para que el usuario pueda ingresar los valores de las ecuaciones y variables.
+\\
+
+\section*{Probando el código}
+Para probar el código, se van a usar los ejercios de la página x del libro algebra lineal de Stanley I. Grossman, 7ma edición:
 
 \begin{thebibliography}{99}
 \bibitem{torres_solis}
