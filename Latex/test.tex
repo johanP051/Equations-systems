@@ -1,5 +1,27 @@
 \documentclass[letterpaper,12pt]{article}
+\usepackage{xcolor}
 \usepackage{listings}
+
+\definecolor{jl_background}{RGB}{253, 246, 227}
+\definecolor{jl_text}{RGB}{0, 0, 0}
+\definecolor{jl_comment}{RGB}{35, 129, 123}
+\definecolor{jl_string}{RGB}{204, 102, 0}
+\definecolor{jl_keyword}{RGB}{77, 0, 77}
+
+\lstdefinestyle{jupyter}{
+    backgroundcolor=\color{jl_background},
+    basicstyle=\color{jl_text}\small\ttfamily,
+    breaklines=true,
+    captionpos=b,
+    commentstyle=\color{jl_comment},
+    keywordstyle=\color{jl_keyword},
+    stringstyle=\color{jl_string},
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    showstringspaces=false,
+    tabsize=4
+}
 
 \lstset{language=Python, 
     basicstyle=\ttfamily,
@@ -9,6 +31,8 @@
     morecomment=[l][\color{magenta}]{\#}
 }
 
+\usepackage[utf8]{inputenc} % set input encoding
+\usepackage[spanish]{babel}
 \usepackage{tabularx} % extra features for tabular environment
 \usepackage{amsmath}  % improve math presentation
 \usepackage{graphicx} % takes care of graphic including machinery
@@ -39,8 +63,7 @@
 En un principio el programa se había construido sin usar POO, sin embargo se decidió hacer uso de este paradigma de la programación para
 mejorar su estructura. El código se puede acceder en el perfil de GitHub del desarrollador del código: \url{https://github.com/johanP051/Equations-systems.git}
 
-Para empezar, se debe solicitar al usuario que ingrese el número de ecuaciones y el número de variables 
-del sistema que siga la siguiente forma:
+Para empezar, el sistema de ecuaciones lineales debe seguir esta forma:
 
 \begin{align*}
     a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n = b_1, \quad
@@ -61,9 +84,221 @@ a_{n1} & a_{n2} & \cdots & b_n \\
 \end{array}
 \right)
 \]
+\\
+Donde la última columna es el vector de igualdad. El programa se diseñó para que el usuario pueda ingresar los valores de los coeficientes y luego el de los términos
+independientes, luego se encarga de realizar las operaciones necesarias para encontrar los valores de las variables o incógnitas.
 
-Donde la última columna es el el vector de igualdad.
 
+Para empezar veamos el siguiente código:
+\\
+\begin{lstlisting}[style=jupyter, language=Python, caption={Atributos de la clase}]
+    import numpy as np
+
+    class SistemaEcuaciones:
+        def __init__(self, ecuaciones, variables):
+            self.ecuaciones = ecuaciones
+            self.variables = variables
+            
+            # Lista para almacenar las filas de la matriz
+            self.filas = []
+            # Matriz para realizar las operaciones de Gauss-Jordan
+            self.matrizReducir = None
+    \end{lstlisting}
+
+    Fíjese que se ha creado una clase llamada \textcolor{jl_keyword}{SistemaEcuaciones},
+    despúes en el método \textcolor{jl_keyword}{def \_\_init\_\_} se crean los atributos del objeto: \textcolor{jl_keyword}{ecuaciones} y \textcolor{jl_keyword}{variables}
+    que son los valores que se solicitarán al usuario.
+    Además se crea una lista llamada \textcolor{jl_keyword}{filas} que almacenará 
+    los renglones de la matriz y un arreglo llamado \textcolor{jl_keyword}{matrizReducir}
+    que se usará para realizar las operaciones de Gauss-Jordan (Por el momento solo se define la variable como self.matrizReducir, por eso toma el valor \textcolor{jl_keyword}{None}, eso después va a cambiar cuando el usuario digite los datos).
+    \\
+    \begin{lstlisting}[style=jupyter, language=Python, caption={Método para recoger los datos}]
+    def recoger_datos(self):
+        for i in range(self.ecuaciones):
+            elementosFila = []
+            print(f"\nPara la ecuacion numero {i + 1}:")
+
+            for j in range(self.variables):
+                Xn = int(input(f"Inserte el valor del coeficiente X{j + 1}: "))
+                elementosFila.extend([Xn])
+
+            igualdad = int(input(f"A que valor esta igualada la ecuacion?: "))
+            elementosFila.extend([igualdad])
+
+            # Agregar la fila a la lista de filas, cada fila representa un solo elemento de la lista
+            self.filas.append(elementosFila)
+        \end{lstlisting}
+Aquí se crea un método llamado \textcolor{jl_keyword}{recoger\_datos} que solicita al usuario los valores de los coeficientes de las variables y los términos independientes.
+Nótese que hay un bucle for anidado, el bucle externo se usa únicamente para decirle al usuario 
+cuál ecuación o fila de la matriz está digitando (i), mientras que el bucle interno se usa para recorrer las columnas (j)
+solicitando los valores de los coeficientes, una vez termine este bucle se le pide el valor al que está igualada la ecuación
+y el bucle externo se vuelve a repetir hasta que finalice el rango del número de ecuaciones.
+Cada elemento de la fila se almacena en una lista llamada \textcolor{jl_keyword}{elementosFila} y luego cada una se agrega a la lista \textcolor{jl_keyword}{filas} que es una lista de listas.
+\\
+
+Para entender bien el siguiente método y el siguiente ejemplo sobre cómo funciona el algoritmo para reducir un sistema de 3x3, una vez se entienda, esto se puede extrapolar a una nxn.
+
+Tomemos la siguiente matriz:
+\[
+\left(
+\begin{array}{ccc|c}
+a_{11} & a_{12} & a_{13} & b_1 \\
+a_{21} & a_{22} & a_{23} & b_2 \\
+a_{31} & a_{32} & a_{33} & b_3 \\
+\end{array}
+\right)
+\]
+
+El objetivo de la simplificacion es que los pivotes sean igual a 1
+Si simplificamos desde la fila con índice 0 hasta la fila con índice 3, 
+vamos a dividir cada fila teniendo en cuenta el elemento de la columna correspondiente, obtendremos lo siguiente:
+
+\[
+    \begin{array}{@{}cl}
+    \begin{pmatrix}
+        a_{11} & a_{12} & a_{13} & b_1 \\
+        a_{21} & a_{22} & a_{23} & b_2 \\
+        a_{31} & a_{32} & a_{33} & b_3 \\
+    \end{pmatrix}
+    &
+    \begin{aligned}
+        F_1 / a_{11} \rightarrow F_1 \\
+        F_2 / a_{21} \rightarrow F_2 \\
+        F_3 / a_{31} \rightarrow F_3
+    \end{aligned}
+
+    \end{array}
+\]
+
+Una vez hecho esto, se tiene una matriz simplificada que se puede reducir más fácil::
+
+\[
+\left(
+\begin{array}{ccc|c}
+1 & a_{12}/a_{11} & a_{13}/a_{11} & b_1/a_{11} \\
+1 & a_{22}/a_{21} & a_{23}/a_{21} & b_2/a_{21} \\
+1 & a_{32}/a_{31} & a_{33}/a_{31} & b_3/a_{31} \\
+\end{array}
+\right)
+&
+\begin{aligned}
+    \\
+    F_2 - F_1 \rightarrow F_2 \\
+    F_3 - F_1 \rightarrow F_3
+\end{aligned}
+\]
+\\
+Reduciendo teniendo como pivote la fila 1 (indice 0):
+
+\[
+\left(
+\begin{array}{ccc|c}
+1 & a_{12}/a_{11} & a_{13}/a_{11} & b_1/a_{11} \\
+0 & (a_{22}/a_{21})-(a_{12}/a_{11}) & (a_{23}/a_{21})-(a_{13}/a_{11}) & (b_2/a_{21})-(b_1/a_{11}) \\
+0 & (a_{32}/a_{31})-(a_{12}/a_{11}) & (a_{33}/a_{31})-(a_{13}/a_{11}) & (b_3/a_{31})-(b_1/a_{11})\\
+\end{array}
+\right)
+\]
+\\
+Ahora se debe volver a simplificar la matriz para que el pivote de la fila 2 (indice 1) sea igual a 1 y luego reducir las filas restantes.
+\[
+\left(
+\begin{array}{ccc|c}
+1 & a_{12}/a_{11} & a_{13}/a_{11} & b_1/a_{11} \\
+0 & (a_{22}/a_{21})-(a_{12}/a_{11}) & (a_{23}/a_{21})-(a_{13}/a_{11}) & (b_2/a_{21})-(b_1/a_{11}) \\
+0 & (a_{32}/a_{31})-(a_{12}/a_{11}) & (a_{33}/a_{31})-(a_{13}/a_{11}) & (b_3/a_{31})-(b_1/a_{11})\\
+\end{array}
+\right)
+&
+\begin{aligned}
+    \\
+    F_2/(a_{22}/a_{21})-(a_{12}/a_{11}) \rightarrow F_2 \\
+    F_3/(a_{32}/a_{31})-(a_{12}/a_{11}) \rightarrow F_3
+\end{aligned}
+\]
+\\
+La matriz simplifcada se puede reducir de nuevo teniendo como pivote la fila 2 (indice 1):
+
+\[
+\left(
+\begin{array}{ccc|c}
+1 & a_{12}/a_{11} & a_{13}/a_{11} & b_1/a_{11} \\
+0 & 1 & [(a_{23}/a_{21})-(a_{13}/a_{11})]/[(a_{22}/a_{21})-(a_{12}/a_{11})] & \cdots \\
+0 & 1 & [(a_{33}/a_{31})-(a_{13}/a_{11})]/[(a_{32}/a_{31})-(a_{12}/a_{11})] & \cdots \\
+\end{array}
+\right)
+&
+\begin{aligned}
+    \\
+    F_3 - F_2 \rightarrow F_3 \\
+\end{aligned}
+\]
+\\
+
+\[
+\left(
+\begin{array}{ccc|c}
+1 & a_{12}/a_{11} & a_{13}/a_{11} & b_1/a_{11} \\
+0 & 1 & [(a_{23}/a_{21})-(a_{13}/a_{11})]/[(a_{22}/a_{21})-(a_{12}/a_{11})] & \cdots \\
+0 & 0 & \cdots & \cdots \\
+\end{array}
+\right)
+&
+\begin{aligned}
+    \\
+    F_3 - F_2 \rightarrow F_3 \\
+\end{aligned}
+\]
+\\
+Después se simplifica la fila 3 para lograr una matriz triangular superior con unos en la diagonal principal y ceros debajo de la diagonal principal.
+De igual manera el algoritmo revisa si hay más filas restantes para reducir, en este caso no hay más filas restantes, por lo que el proceso termina.
+\\
+Si notamos bien, el proceso se hace por cada fila y termina termina cuando las columnas de la matriz de coeficientes se acaba:
+En el paso 1 se simplificó desde la fila 1 hasta la fila 3 y se redujo desde la fila 2 hasta la fila 3.
+En el paso 2 se simplificó desde la fila 2 hasta la fila 3 y se redujo solamente la fila 3.
+En el paso 3 se simplificó solamente la fila 3 y la reducción no se hace, pues en este caso la fila a reducir sería la número 4 y como no existe, entonces el bucle for no se ejecuta.
+\\
+\begin{lstlisting}[style=jupyter, language=Python, caption={Método para resolver el sistema de ecuaciones}]
+    def gauss_jordan(self):
+        inicioFilaSimplificacion = -1
+        finalFilaSimplificacion = self.ecuaciones
+        elementoFilaSimplificacion = -1
+
+        inicioFilaReduccion = 0
+        finalFilaReduccion = self.ecuaciones
+        filaPivote = -1
+
+        columnas = self.variables
+
+        while columnas >= 1:
+            inicioFilaSimplificacion += 1
+            finalFS = finalFilaSimplificacion
+            elementoFilaSimplificacion += 1
+
+            # Simplificar la fila actual dividiendo por el elemento de la columna correspondiente
+            for filaS in range(inicioFilaSimplificacion, finalFS):
+                filaSimplificada = self.matrizReducir[filaS]
+                filaSimplificada = filaSimplificada / filaSimplificada[elementoFilaSimplificacion]
+                self.matrizReducir[filaS] = filaSimplificada
+
+            print(f"\nResultado de la simplificacion: ")
+            print(self.matrizReducir)
+
+            inicioFilaReduccion += 1
+            finalFR = finalFilaReduccion
+            filaPivote += 1
+
+            # Reducir las filas restantes restando la fila pivote multiplicada por el elemento correspondiente
+            for filaR in range(inicioFilaReduccion, finalFR):
+                filaReducida = self.matrizReducir[filaR]
+                filaReducida = filaReducida - self.matrizReducir[filaPivote]
+                self.matrizReducir[filaR] = filaReducida
+
+            print(f"\nResultado de la Reduccion: \n{self.matrizReducir}")
+
+            columnas -= 1
+
+\end{lstlisting}
 
 \begin{thebibliography}{99}
 \bibitem{torres_solis}

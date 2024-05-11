@@ -16,13 +16,14 @@ class SistemaEcuaciones:
             print(f"\nPara la ecuación número {i + 1}:")
 
             for j in range(self.variables):
-                Xn = int(input(f"Inserte el valor de X{j + 1}: "))
+                Xn = int(input(f"Inserte el valor del coeficiente X{j + 1}: "))
                 elementosFila.extend([Xn])
 
             igualdad = int(input(f"¿A qué valor está igualada la ecuación?: "))
             elementosFila.extend([igualdad])
 
-            # Agregar la fila a la lista de filas, cada fila representa un solo elemento de la lista, para que después se pueda crear un arreglo de numpy
+            # Agregar la fila a la lista de filas, cada fila representa un solo elemento de la lista
+            #para que después se pueda crear un arreglo de numpy
             self.filas.append(elementosFila)
 
     def resolver(self):
@@ -53,7 +54,7 @@ class SistemaEcuaciones:
             inicioFilaSimplificacion += 1
             finalFS = finalFilaSimplificacion
             elementoFilaSimplificacion += 1
-
+            #print(inicioFilaSimplificacion, finalFS, elementoFilaSimplificacion)
             # Simplificar la fila actual dividiendo por el elemento de la columna correspondiente
             for filaS in range(inicioFilaSimplificacion, finalFS):
                 filaSimplificada = self.matrizReducir[filaS]
@@ -66,7 +67,7 @@ class SistemaEcuaciones:
             inicioFilaReduccion += 1
             finalFR = finalFilaReduccion
             filaPivote += 1
-
+            #print(inicioFilaReduccion, finalFR, filaPivote)
             # Reducir las filas restantes restando la fila pivote multiplicada por el elemento correspondiente
             for filaR in range(inicioFilaReduccion, finalFR):
                 filaReducida = self.matrizReducir[filaR]
