@@ -1,8 +1,8 @@
 # Fdb version 3
-["pdflatex"] 1715553422 "/media/sebas/Exdrive/Equations-systems/Latex/test.tex" "build/test.pdf" "test" 1715553422
+["pdflatex"] 1715554450 "/media/sebas/Exdrive/Equations-systems/Latex/test.tex" "build/test.pdf" "test" 1715554450
   "/etc/texmf/web2c/texmf.cnf" 1651974335 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/sebas/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600pk" 1715446952 14040 fa125e670fe50443e5d1907514460d60 ""
-  "/media/sebas/Exdrive/Equations-systems/Latex/test.tex" 1715553422 24128 f8dac6fcc5d75e04a187d4f5b930e22d ""
+  "/media/sebas/Exdrive/Equations-systems/Latex/test.tex" 1715554449 24096 3eea8536352e49f75c6600f3b827efa2 ""
   "/media/sebas/Exdrive/Equations-systems/imagenes/LU1_0.png" 1715550576 35831 eef5a1e8c943470dfc91e75e3a1797c5 ""
   "/media/sebas/Exdrive/Equations-systems/imagenes/LU1_1.png" 1715551111 24946 6f2ebbc12e7d0c4d0af06780d0ac9756 ""
   "/media/sebas/Exdrive/Equations-systems/imagenes/ejecucion1_0.png" 1715538986 27172 17be23f1c8dac0fdcc7b43aa18c1f6e4 ""
@@ -111,9 +111,9 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1651975611 128028 f533b797fba58d231669ea19e894e23e ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1710423911 1405650 c8eefb784084e3423dd3005e47fede5b ""
-  "build/test.aux" 1715553422 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "build/test.aux" 1715554450 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
   "build/test.out" 0 -1 0 "pdflatex"
-  "test.tex" 1715553422 24128 f8dac6fcc5d75e04a187d4f5b930e22d ""
+  "test.tex" 1715554449 24096 3eea8536352e49f75c6600f3b827efa2 ""
   (generated)
   "build/test.aux"
   "build/test.log"
