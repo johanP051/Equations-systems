@@ -1,8 +1,16 @@
 # Fdb version 3
-["pdflatex"] 1715448273 "/media/sebas/Exdrive/Equations-systems/Latex/test.tex" "build/test.pdf" "test" 1715448273
+["pdflatex"] 1715553422 "/media/sebas/Exdrive/Equations-systems/Latex/test.tex" "build/test.pdf" "test" 1715553422
   "/etc/texmf/web2c/texmf.cnf" 1651974335 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/sebas/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600pk" 1715446952 14040 fa125e670fe50443e5d1907514460d60 ""
-  "/media/sebas/Exdrive/Equations-systems/Latex/test.tex" 1715448269 15371 f322fe1a2713875c5764f7638d975dcf ""
+  "/media/sebas/Exdrive/Equations-systems/Latex/test.tex" 1715553422 24128 f8dac6fcc5d75e04a187d4f5b930e22d ""
+  "/media/sebas/Exdrive/Equations-systems/imagenes/LU1_0.png" 1715550576 35831 eef5a1e8c943470dfc91e75e3a1797c5 ""
+  "/media/sebas/Exdrive/Equations-systems/imagenes/LU1_1.png" 1715551111 24946 6f2ebbc12e7d0c4d0af06780d0ac9756 ""
+  "/media/sebas/Exdrive/Equations-systems/imagenes/ejecucion1_0.png" 1715538986 27172 17be23f1c8dac0fdcc7b43aa18c1f6e4 ""
+  "/media/sebas/Exdrive/Equations-systems/imagenes/ejecucion1_1.png" 1715539018 27067 b7a80b8b0c8f06a394cfab2190c2b92d ""
+  "/media/sebas/Exdrive/Equations-systems/imagenes/ejecucion1_2.png" 1715539057 28492 a6d11cbb98bd2168317e70e2ca4d9fae ""
+  "/media/sebas/Exdrive/Equations-systems/imagenes/ejecucion2_0.png" 1715539320 28399 58704fadff177c0df82844e21811c316 ""
+  "/media/sebas/Exdrive/Equations-systems/imagenes/ejecucion2_1.png" 1715539342 32986 12ac650f518a18f94cf3f35244f8bc2a ""
+  "/media/sebas/Exdrive/Equations-systems/imagenes/ejecucion2_2.png" 1715539363 29470 4f7e82e7121e357d106d69968ef84d29 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1136768653 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -31,6 +39,7 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1248133631 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1248133631 32626 4f5c1b83753b1dd3a97d1b399a005b4b ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb" 1248133631 31099 c85edf1dd5b9e826d67c9c7293b6786c ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb" 1248133631 24252 1e4e051947e12dfb50fee0b7f4e26e3a ""
   "/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1461363279 71627 94eb9990bed73c364d7f53f960cc8c5b ""
@@ -102,9 +111,9 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1651975611 128028 f533b797fba58d231669ea19e894e23e ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1710423911 1405650 c8eefb784084e3423dd3005e47fede5b ""
-  "build/test.aux" 1715448273 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "build/test.aux" 1715553422 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
   "build/test.out" 0 -1 0 "pdflatex"
-  "test.tex" 1715448269 15371 f322fe1a2713875c5764f7638d975dcf ""
+  "test.tex" 1715553422 24128 f8dac6fcc5d75e04a187d4f5b930e22d ""
   (generated)
   "build/test.aux"
   "build/test.log"

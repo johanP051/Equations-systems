@@ -2,8 +2,6 @@
 
 import numpy as np
 
-# Factorizacion LU
-
 dim_A = int(input("Ingrese la dimensión de la matriz cuadrada A: "))
 A = np.zeros((dim_A, dim_A))
 for i in range(dim_A):
