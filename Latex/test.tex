@@ -537,8 +537,11 @@ para esto se usa un bucle for anidado que recorre las filas (i) y columnas (j) d
     # Factorizacion LU
     L = np.eye(dim_A)
     U = np.zeros((dim_A, dim_A))
-    haz el tamaño de cada imagen mas grande para que ocupen una pagina completa_A):
-            L[i, k] = (A[i, k] e- np.dot(L[i, :k], U[:k, k])) / U[k, k]
+    
+    for k in range(dim_A):
+        U[k, k] = A[k, k] - np.dot(L[k, :k], U[:k, k])
+        for i in range(k + 1, dim_A):
+            L[i, k] = (A[i, k] - np.dot(L[i, :k], U[:k, k])) / U[k, k]
         for j in range(k + 1, dim_A):
             U[k, j] = A[k, j] - np.dot(L[k, :k], U[:k, j])
     
