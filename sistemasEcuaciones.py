@@ -58,7 +58,8 @@ class SistemaEcuaciones:
             # Simplificar la fila actual dividiendo por el elemento de la columna correspondiente
             for filaS in range(inicioFilaSimplificacion, finalFS):
                 filaSimplificada = self.matrizReducir[filaS]
-                filaSimplificada = filaSimplificada / filaSimplificada[elementoFilaSimplificacion]
+                if filaSimplificada[elementoFilaSimplificacion] != 0:
+                    filaSimplificada = filaSimplificada / filaSimplificada[elementoFilaSimplificacion]
                 self.matrizReducir[filaS] = filaSimplificada
 
             print(f"\nResultado de la simplificación: ")
@@ -71,7 +72,8 @@ class SistemaEcuaciones:
             # Reducir las filas restantes restando la fila pivote multiplicada por el elemento correspondiente
             for filaR in range(inicioFilaReduccion, finalFR):
                 filaReducida = self.matrizReducir[filaR]
-                filaReducida = filaReducida - self.matrizReducir[filaPivote]
+                if filaReducida[filaPivote] != 0:
+                    filaReducida = filaReducida - self.matrizReducir[filaPivote]
                 self.matrizReducir[filaR] = filaReducida
 
             print(f"\nResultado de la Reducción: \n{self.matrizReducir}")
@@ -100,7 +102,8 @@ class SistemaEcuaciones:
             # Simplificar la fila actual dividiendo por el elemento de la columna correspondiente
             for filaS in reversed(range(inicioFS, finalFilaSimplificacion + 1)):
                 filaSimplificada = self.matrizReducir[filaS]
-                filaSimplificada = filaSimplificada / filaSimplificada[elementoFilaSimplificacion]
+                if filaSimplificada[elementoFilaSimplificacion] != 0:
+                    filaSimplificada = filaSimplificada / filaSimplificada[elementoFilaSimplificacion]
                 self.matrizReducir[filaS] = filaSimplificada
 
             print(f"\nResultado de la simplificación: ")
@@ -113,7 +116,8 @@ class SistemaEcuaciones:
             # Reducir las filas restantes restando la fila pivote multiplicada por el elemento correspondiente
             for filaR in reversed(range(inicioFR, finalFilaReduccion)):
                 filaReducida = self.matrizReducir[filaR]
-                filaReducida = filaReducida - self.matrizReducir[filaPivote]
+                if filaReducida[filaPivote] != 0:
+                    filaReducida = filaReducida - self.matrizReducir[filaPivote]
                 self.matrizReducir[filaR] = filaReducida
 
             print(f"\nResultado de la Reducción: \n{self.matrizReducir}")
