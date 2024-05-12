@@ -5,5 +5,5 @@
 
 ## Para ver la documentación:
 Dírijase a la carpeta donde se clonó el proyecto y después vaya a Latex/build/test.pdf
-```cd Equations-systems```
-```cd Latex/build/test.pdf```
+* ```cd Equations-systems```
+* ```cd Latex/build/test.pdf```
