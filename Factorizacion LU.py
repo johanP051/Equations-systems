@@ -14,7 +14,7 @@ U = A.copy()
 
 for j in range(dim_A):
     for i in range(j+1, dim_A):
-        # Factor que multiplica a la fila j para igualarlo al elemneto i, j de la matriz U y que al restarlos dé 0
+        # Factor que multiplica a la fila j para igualarlo al elemneto [i, j] de la matriz U y que al restarlos dé 0
         factor = U[i, j] / U[j, j]
 
         #Se actualiza la matriz L con el factor
@@ -22,7 +22,7 @@ for j in range(dim_A):
         #Se reduce la fila i de la matriz U
         U[i] = U[i] - factor * U[j]
 
-print(f"Matriz A: \n{A}\n Matriz L: \n{L}\n Matriz U: \n{U}\n")
+print(f"\nMatriz A: \n{A}\n\n Matriz L: \n{L}\n\n Matriz U: \n{U}\n")
 
 print("Verificación: L * U = A")
 print(np.dot(L, U))

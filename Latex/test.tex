@@ -179,11 +179,12 @@ vamos a dividir cada fila teniendo en cuenta el elemento de la columna correspon
 Una vez hecho esto, se tiene una matriz simplificada que se puede reducir más fácil::
 
 \[
+    \renewcommand{\arraystretch}{2.5}
 \left(
 \begin{array}{ccc|c}
-1 & a_{12}/a_{11} & a_{13}/a_{11} & b_1/a_{11} \\
-1 & a_{22}/a_{21} & a_{23}/a_{21} & b_2/a_{21} \\
-1 & a_{32}/a_{31} & a_{33}/a_{31} & b_3/a_{31} \\
+1 & \dfrac{a_{12}}{a_{11}} & \dfrac{a_{13}}{a_{11}} & \dfrac{b_1}{a_{11}} \\
+1 & \dfrac{a_{22}}{a_{21}} & \dfrac{a_{23}}{a_{21}} & \dfrac{b_2}{a_{21}} \\
+1 & \dfrac{a_{32}}{a_{31}} & \dfrac{a_{33}}{a_{31}} & \dfrac{b_3}{a_{31}} \\
 \end{array}
 \right)
 &
@@ -192,45 +193,54 @@ Una vez hecho esto, se tiene una matriz simplificada que se puede reducir más f
     F_2 - F_1 \rightarrow F_2 \\
     F_3 - F_1 \rightarrow F_3
 \end{aligned}
+
 \]
-\\
+
 Reduciendo teniendo como pivote la fila 1 (indice 0):
 
 \[
+\renewcommand{\arraystretch}{2.5}
 \left(
 \begin{array}{ccc|c}
-1 & a_{12}/a_{11} & a_{13}/a_{11} & b_1/a_{11} \\
-0 & (a_{22}/a_{21})-(a_{12}/a_{11}) & (a_{23}/a_{21})-(a_{13}/a_{11}) & (b_2/a_{21})-(b_1/a_{11}) \\
-0 & (a_{32}/a_{31})-(a_{12}/a_{11}) & (a_{33}/a_{31})-(a_{13}/a_{11}) & (b_3/a_{31})-(b_1/a_{11})\\
+    1 & \dfrac{a_{12}}{a_{11}} & \dfrac{a_{13}}{a_{11}} & \dfrac{b_1}{a_{11}} \\
+    0 & \dfrac{a_{22}}{a_{21}} - \dfrac{a_{12}}{a_{11}} & \dfrac{a_{23}}{a_{21}} - \dfrac{a_{13}}{a_{11}} & \dfrac{b_2}{a_{21}} - \dfrac{b_1}{a_{11}} \\
+    0 & \dfrac{a_{32}}{a_{31}} - \dfrac{a_{12}}{a_{11}} & \dfrac{a_{33}}{a_{31}} - \dfrac{a_{13}}{a_{11}} & \dfrac{b_3}{a_{31}} - \dfrac{b_1}{a_{11}} \\
 \end{array}
 \right)
+
 \]
+
 \\
 Ahora se debe volver a simplificar la matriz para que el pivote de la fila 2 (indice 1) sea igual a 1 y luego reducir las filas restantes.
+
 \[
+\renewcommand{\arraystretch}{3}
 \left(
 \begin{array}{ccc|c}
-1 & a_{12}/a_{11} & a_{13}/a_{11} & b_1/a_{11} \\
-0 & (a_{22}/a_{21})-(a_{12}/a_{11}) & (a_{23}/a_{21})-(a_{13}/a_{11}) & (b_2/a_{21})-(b_1/a_{11}) \\
-0 & (a_{32}/a_{31})-(a_{12}/a_{11}) & (a_{33}/a_{31})-(a_{13}/a_{11}) & (b_3/a_{31})-(b_1/a_{11})\\
+1 & \dfrac{a_{12}}{a_{11}} & \dfrac{a_{13}}{a_{11}} & \dfrac{b_1}{a_{11}} \\
+0 & \dfrac{a_{22}}{a_{21}} - \dfrac{a_{12}}{a_{11}} & \dfrac{a_{23}}{a_{21}} - \dfrac{a_{13}}{a_{11}} & \dfrac{b_2}{a_{21}} - \dfrac{b_1}{a_{11}} \\
+0 & \dfrac{a_{32}}{a_{31}} - \dfrac{a_{12}}{a_{11}} & \dfrac{a_{33}}{a_{31}} - \dfrac{a_{13}}{a_{11}} & \dfrac{b_3}{a_{31}} - \dfrac{b_1}{a_{11}} \\
 \end{array}
 \right)
 &
 \begin{aligned}
     \\
-    F_2/(a_{22}/a_{21})-(a_{12}/a_{11}) \rightarrow F_2 \\
-    F_3/(a_{32}/a_{31})-(a_{12}/a_{11}) \rightarrow F_3
+    \dfrac{F_2}{(a_{22}/a_{21})-(a_{12}/a_{11})} \rightarrow F_2 \\
+    \dfrac{F_3}{(a_{32}/a_{31})-(a_{12}/a_{11})} \rightarrow F_3
 \end{aligned}
+
 \]
+
 \\
 La matriz simplifcada se puede reducir de nuevo teniendo como pivote la fila 2 (indice 1):
 
 \[
+\renewcommand{\arraystretch}{3.5}
 \left(
 \begin{array}{ccc|c}
-1 & a_{12}/a_{11} & a_{13}/a_{11} & b_1/a_{11} \\
-0 & 1 & [(a_{23}/a_{21})-(a_{13}/a_{11})]/[(a_{22}/a_{21})-(a_{12}/a_{11})] & \cdots \\
-0 & 1 & [(a_{33}/a_{31})-(a_{13}/a_{11})]/[(a_{32}/a_{31})-(a_{12}/a_{11})] & \cdots \\
+1 & \dfrac{a_{12}}{a_{11}} & \dfrac{a_{13}}{a_{11}} & \dfrac{b_1}{a_{11}} \\
+0 & 1 & \dfrac{(a_{23}/a_{21})-(a_{13}/a_{11})}{(a_{22}/a_{21})-(a_{12}/a_{11})} & \dfrac{(b_2/a_{21})-(b_1/a_{11})}{(a_{22}/a_{21})-(a_{12}/a_{11})} \\
+0 & 0 & \dfrac{(a_{33}/a_{31})-(a_{13}/a_{11})}{(a_{32}/a_{31})-(a_{12}/a_{11})} & \dfrac{(b_3/a_{31})-(b_1/a_{11})}{(a_{32}/a_{31})-(a_{12}/a_{11})} \\
 \end{array}
 \right)
 &
@@ -238,15 +248,17 @@ La matriz simplifcada se puede reducir de nuevo teniendo como pivote la fila 2 (
     \\
     F_3 - F_2 \rightarrow F_3 \\
 \end{aligned}
+
 \]
 \\
 
 \[
+    \renewcommand{\arraystretch}{3.5}
 \left(
 \begin{array}{ccc|c}
-1 & a_{12}/a_{11} & a_{13}/a_{11} & b_1/a_{11} \\
-0 & 1 & [(a_{23}/a_{21})-(a_{13}/a_{11})]/[(a_{22}/a_{21})-(a_{12}/a_{11})] & \cdots \\
-0 & 0 & \cdots & \cdots \\
+1 & \dfrac{a_{12}}{a_{11}} & \dfrac{a_{13}}{a_{11}} & \dfrac{b_1}{a_{11}} \\
+0 & 1 & \dfrac{(a_{23}/a_{21})-(a_{13}/a_{11})}{(a_{22}/a_{21})-(a_{12}/a_{11})} & \dfrac{(b_2/a_{21})-(b_1/a_{11})}{(a_{22}/a_{21})-(a_{12}/a_{11})} \\
+0 & 0 & \dfrac{(a_{33}/a_{31})-(a_{13}/a_{11})}{(a_{32}/a_{31})-(a_{12}/a_{11})} & \dfrac{(b_3/a_{31})-(b_1/a_{11})}{(a_{32}/a_{31})-(a_{12}/a_{11})}-\dfrac{(b_2/a_{21})-(b_1/a_{11})}{(a_{22}/a_{21})-(a_{12}/a_{11})} \\
 \end{array}
 \right)
 &
@@ -254,6 +266,7 @@ La matriz simplifcada se puede reducir de nuevo teniendo como pivote la fila 2 (
     \\
     F_3 - F_2 \rightarrow F_3 \\
 \end{aligned}
+
 \]
 \\
 Después se simplifica la fila 3 para lograr una matriz triangular superior con unos en la diagonal principal y ceros debajo de la diagonal principal.
@@ -386,7 +399,7 @@ Para probar el código, se van a usar los ejercios de la página 23 del libro al
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\textwidth]{/media/sebas/Exdrive/Equations-systems/imagenes/ejecucion1_0.png}
+    \includegraphics[width=0.9\textwidth]{/media/sebas/Exdrive/Equations-systems/imagenes/ejecucion1_0.png}
     \caption{Solicitando datos y construyendo la matriz aumentada}
     \label{fig: Matriz aumentada ejemplo 1}
 \end{figure}
@@ -426,110 +439,86 @@ Para probar el código, se van a usar los ejercios de la página 23 del libro al
     \label{fig: Gauss-Jordan segunda parte ejemplo 2}
 \end{figure}
 
-\section{Pasos para factorizar por LU}
-
-\begin{enumerate}
-    \item Realizamos el proceso de eliminación de Gauss para convertir la matriz en triangular superior, mientras mantenemos un registro de las operaciones realizadas. Por ejemplo, si tenemos la matriz:
-    
-    \[
-    \begin{array}{@{}cl}
-    \begin{pmatrix}
-    1 & 7 & 6 \\
-    -4 & 3 & 2 \\
-    3 & -2 & 1
-    \end{pmatrix}
-    &
-    \begin{aligned}
-        F_2 + 4F_1 \rightarrow F_2 \\
-        F_3 - 3F_1 \rightarrow F_3
-    \end{aligned}
-
-    \end{array}
-\]
-   \[
-    \begin{array}{@{}cl}
-    \begin{pmatrix}
-    1 & 7 & 6 \\
-    0 & 31 & 26 \\
-    0 & -23 & -17
-    \end{pmatrix}
-    &
-    \begin{aligned}
-        F_3 + \frac{23}{31}F_2 \rightarrow F_3
-    \end{aligned}
-
-    \end{array}
-\]
-\[ U =
-    \begin{array}{@{}cl}
-    \begin{pmatrix}
-    1 & 7 & 6 \\
-    0 & 31 & 26 \\
-    0 & 0 & \frac{71}{31}
-    \end{pmatrix}
-    \end{array}
-    \]
-    
-    \item \(U\) es la matriz triangular superior resultante de la eliminación de Gauss.
-
-    \item Si tomamos los escalares que usamos para realizar la eliminación de Gauss y les cambiamos el signo, obtendremos una matriz que al sumarla con la identidad da como resultado la matriz inferior \(L\).
-
-\[
-L = \begin{pmatrix}
-    0 & 0 & 0 \\
-    -4 & 0 & 0 \\
-    3 & \frac{-23}{31} & 0
-    \end{pmatrix}
-    + 
-    \begin{pmatrix}
-    1 & 0 & 0 \\
-    0 & 1 & 0 \\
-    0 & 0 & 1
-    \end{pmatrix}
-    =
-    \begin{pmatrix}
-    1 & 0 & 0 \\
-    -4 & 1 & 0 \\
-    3 & \frac{-23}{31} & 1
-    \end{pmatrix}
-\]
-
-    
-    \item Por último se verifica que  $L\cdot U = A$.
-
-\[
-A = \begin{pmatrix}
-    1 & 0 & 0 \\
-    -4 & 1 & 0 \\
-    3 & \frac{-23}{31} & 1
-    \end{pmatrix}
-    \cdot
-    \begin{pmatrix}
-    1 & 7 & 6 \\
-    0 & 31 & 26 \\
-    0 & 0 & \frac{71}{31}
-    \end{pmatrix}
-    =
-    \begin{pmatrix}
-    1 & 7 & 6 \\
-    -4 & 3 & 2 \\
-    3 & -2 & 1
-    \end{pmatrix}
-\]
-    
-\end{enumerate}
-
 \section*{Construyendo el programa para Factorización LU}
+
+Antes de ver el código vamos a ver un ejemplo para una matriz 3x3:
+\\
+Primero se debe reducir la matriz A a una matriz triangular superior U, para esto, los elementos debajo de la diagonal principal se reducen hasta que sean iguales a 0.
+Cada factor de multiplicación que se use para reducir las filas debe ponerse en la matriz L, esta es igual a la matriz identidad, con la excepcion de que debajo de la diagonal principal se encuentran los factores de multiplicación.
+\[
+U =
+\renewcommand{\arraystretch}{1.7} 
+\left(
+\begin{array}{ccc}
+a_{11} & a_{12} & a_{13} \\
+a_{21} & a_{22} & a_{23} \\
+a_{31} & a_{32} & a_{33} \\
+\end{array}
+\right)
+&
+\begin{aligned}
+    \\
+    F_2 - \dfrac{a_{21}}{a_{11}}\cdot F_1 \rightarrow F_2 \\
+    F_3 - \dfrac{a_{31}}{a_{11}}\cdot F_1 \rightarrow F_3
+\end{aligned}
+
+\]
+
+\[
+U = 
+\renewcommand{\arraystretch}{2.5}
+\left(
+\begin{array}{ccc}
+a_{11} & a_{12} & a_{13} \\
+0 & a_{22}-\dfrac{a_{21}}{a_{11}}\cdot a_{12} & a_{23}-\dfrac{a_{21}}{a_{11}}\cdot a_{13} \\
+0 & a_{32}-\dfrac{a_{31}}{a_{11}}\cdot a_{12} & a_{33}-\dfrac{a_{31}}{a_{11}}\cdot a_{13} \\
+\end{array}
+\right)
+&
+\begin{aligned}
+    F_3 - \dfrac{a_{32}-(a_{31}/a_{11})\cdot a_{12}}{a_{22}-(a_{21}/a_{11})\cdot a_{12}}\cdot F_2 \rightarrow F_3
+\end{aligned}
+\]
+
+\[
+U = 
+\renewcommand{\arraystretch}{2.5}
+\left(
+\begin{array}{ccc}
+a_{11} & a_{12} & a_{13} \\
+0 & a_{22}-\dfrac{a_{21}}{a_{11}}\cdot a_{12} & a_{23}-\dfrac{a_{21}}{a_{11}}\cdot a_{13} \\
+0 & 0 & (a_{33}-\dfrac{a_{31}}{a_{11}}\cdot a_{13})-(\dfrac{a_{32}-(a_{31}/a_{11})\cdot a_{12}}{a_{22}-(a_{21}/a_{11})\cdot a_{12}})\cdot (a_{23}-\dfrac{a_{21}}{a_{11}}\cdot a_{13})\\
+\end{array}
+\right)
+\]
+\\
+Una vez se tiene la matriz U, se puede hallar la matriz L, reemplazando los factores de multiplicación en las posiciones L[2, 1], L[3, 1] y L[3, 2].
+\\\\
+
+\[
+L =
+\renewcommand{\arraystretch}{2.5} 
+\left(
+\begin{array}{ccc}
+1 & 0 & 0 \\
+\dfrac{a_{21}}{a_{11}} & 1 & 0 \\
+\dfrac{a_{31}}{a_{11}} & \dfrac{a_{32}-(a_{31}/a_{11})\cdot a_{12}}{a_{22}-(a_{21}/a_{11})\cdot a_{12}} & 1 \\
+\end{array}
+\right)
+\]
+\\
+Estas conclusiones se pueden extrapolar a una matriz $n\cdot n$.
+\\
+
 \begin{lstlisting}[style=jupyter, language=Python, caption={Construyendo la Matriz A}]
     import numpy as np
 
-    dim_A = int(input("Ingrese la dimensión de la matriz cuadrada A: "))
+    dim_A = int(input("Ingrese la dimension de la matriz cuadrada A: "))
     A = np.zeros((dim_A, dim_A))
+    
     for i in range(dim_A):
         for j in range(dim_A):
             A[i, j] = float(input(f"Ingrese el elemento A[{i + 1}, {j + 1}]: "))
-    
-    print(f"\nLa matriz A es:\n{A}")
 \end{lstlisting}
 \\
 Aquí se solicita al usuario que ingrese la dimensión de la matriz cuadrada y luego los elementos de la matriz A, 
@@ -538,54 +527,62 @@ para esto se usa un bucle for anidado que recorre las filas (i) y columnas (j) d
 \\
 \begin{lstlisting}[style=jupyter, language=Python, caption={Factorizando}]
     # Factorizacion LU
-    L = np.eye(dim_A)
-    U = np.zeros((dim_A, dim_A))
+    L = np.identity(dim_A)
+    U = A.copy()
     
-    for k in range(dim_A):
-        U[k, k] = A[k, k] - np.dot(L[k, :k], U[:k, k])
-        for i in range(k + 1, dim_A):
-            L[i, k] = (A[i, k] - np.dot(L[i, :k], U[:k, k])) / U[k, k]
-        for j in range(k + 1, dim_A):
-            U[k, j] = A[k, j] - np.dot(L[k, :k], U[:k, j])
+    for j in range(dim_A):
+        for i in range(j+1, dim_A):
+            # Factor que multiplica a la fila j para igualarlo al elemento [i, j] de la matriz U y que al restarlos de 0
+            factor = U[i, j] / U[j, j]
     
-    print(f"\nLa matriz L es:\n{L}")
-    print(f"\nLa matriz U es:\n{U}")
+            # Se actualiza la matriz L con el factor
+            L[i, j] = factor
+            # Se reduce la fila i de la matriz U
+            U[i] = U[i] - factor * U[j]
+    
+    print(f"Matriz A: \n{A}\n Matriz L: \n{L}\n Matriz U: \n{U}\n")
+    
+    print("Verificacion: L * U = A")
+    print(np.dot(L, U))
 \end{lstlisting}
-\\
-Se inicializan las matrices L y U con dimensiones \textcolor{jl_keyword}{dim\_a} mediante las funciones \textcolor{jl_keyword}{np.eye()} y \textcolor{jl_keyword}{np.zeros()}, respectivamente. La primera función genera una matriz con unos en la diagonal y ceros en el resto de las posiciones, mientras que la segunda crea una matriz de ceros con las dimensiones especificadas.
 
-Luego, se ejecuta un bucle for que itera sobre los índices de la matriz A. En cada iteración, se calculan los elementos de la matriz U utilizando la fórmula de la factorización LU. El elemento U[k, k] se calcula restando el producto punto de la fila k de L y la columna k de U a A[k, k]. Después, se calculan los elementos de la columna k de L dividiendo la diferencia entre la columna k de A y el producto punto de la fila i de L y la columna k de U por U[k, k]. Finalmente, se calculan los elementos de la fila k de U restando el producto punto de la fila k de L y las columnas anteriores de U a la fila k de A.
-
-Una vez completados los cálculos, se imprime la matriz L y la matriz U.
+\begin{itemize}
+    \item Empezamos difiniendo a L como una matriz identidad, para posteriormente poder modifcarla con los factores de multiplicación.
+    \item Luego se define a U como una copia de la matriz A, pues necesitamos aplicar una reducción de Gauss para hallar U.
+    \item Vamos a decir que los pivotes siempre se van a encontrar en la diagonal de la matriz U, van a cambiar conforme se cambie de columna, por ejemplo, para reducir las filas de la columna 1, el pivote es U[1][1], para la columna 2, el pivote se encuentra es U[2][2], por lo que podemos decir que los pivotes son U[j][j].
+    \item Por cada columna [j] se reducen las filas que están debajo del pivote, o dicho de otra manera filas con índice j + 1, por ejemplo, para el pivote U[2][2], se reducen las filas 3 (2+1) hasta n. Si a la fila [i] le asignamos el valor que tiene y le restamos el factor multiplicado por la fila en la que se encuentra el pivote, entonces la fila [i] se va a reducir.
+    \item Como se pudo dar cuenta anteriormente en el ejemplo dado, por cada columna se deben recorrer las filas, por eso el bucle externo recorre las columnas [j] y el interno las filas [i].
+\end{itemize}
 
 \section*{Probando el código}
 Para probar el código se va a usar la página 135 del libro algebra lineal de Stanley I. Grossman, 6ta edición:
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.9\textwidth]{/media/sebas/Exdrive/Equations-systems/imagenes/LU1_0.png}
-    \caption{Factorización LU primer ejemplo}
-    \label{fig: Factorización LU segundo ejemplo}
-\end{figure}
 
 \begin{align*}
+    \begin{pmatrix}
+        -1 & 2 & 3 \\
+        2 & 1 & 7 \\
+        1 & 3 & 10
+    \end{pmatrix}
+    \quad
     \begin{pmatrix}
         2 & 3 & 2 & 4 \\
         4 & 10 & -4 & 0 \\
         -3 & -2 & -5 & -2 \\
         -2 & 4 & 4 & -7
     \end{pmatrix}
-    \quad
-    \begin{pmatrix}
-        -1 & 2 & 3 \\
-        2 & 1 & 7 \\
-        1 & 3 & 10
-    \end{pmatrix}
-    \end{align*}
+\end{align*}
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{/media/sebas/Exdrive/Equations-systems/imagenes/LU1_1.png}
+    \includegraphics[width=0.4\textwidth]{/media/sebas/Exdrive/Equations-systems/imagenes/LU1_1.png}
     \caption{Factorización LU segundo ejemplo}
+    \label{fig: Factorización LU segundo ejemplo}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{/media/sebas/Exdrive/Equations-systems/imagenes/LU1_0.png}
+    \caption{Factorización LU primer ejemplo}
     \label{fig: Factorización LU segundo ejemplo}
 \end{figure}
 
@@ -593,6 +590,7 @@ Para probar el código se va a usar la página 135 del libro algebra lineal de S
 
 \begin{itemize}
     \item En este documento se explicó de manera detallada el algoritmo de Gauss-Jordan, para la factorización LU se intentó usar este mismo, sin embargo el código era bastante extenso, por lo que se construyó desde cero.
+    \item Cuando desarrollamos el programa para la factorización LU ya teníamos más conocimiento sobre el funcionamiento de los arreglos, por lo que fue más fácil de construir y se emplearon menos líneas de código para la reducción de Gauss.
     \item Para mejorar el programa se podría reducir la cantidad de lineas de código y no realizar tantas simplificaciones, pues se puede perder exactitud al realizar divisiones con tipos de datos de punto flotante.
 \end{itemize}
 \\
