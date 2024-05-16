@@ -12,14 +12,22 @@ print(f"\nLa matriz A es:\n{A}")
 
 # Factorizacion LU
 L = np.eye(dim_A)
-U = np.zeros((dim_A, dim_A))
+U = A.copy()
 
-for k in range(dim_A):
-    U[k, k] = A[k, k] - np.dot(L[k, :k], U[:k, k])
-    for i in range(k + 1, dim_A):
-        L[i, k] = (A[i, k] - np.dot(L[i, :k], U[:k, k])) / U[k, k]
-    for j in range(k + 1, dim_A):
-        U[k, j] = A[k, j] - np.dot(L[k, :k], U[:k, j])
+k = 0
+#pivote = U[k, k]
+inicioFilaReducir = 1
+finalFIlaReducir = dim_A
 
-print(f"\nLa matriz L es:\n{L}")
-print(f"\nLa matriz U es:\n{U}")
+for j in range(dim_A):
+    pivote = U[j, j]
+    for i in range(inicioFilaReducir, finalFIlaReducir):
+        print(f"\n\nU[j] = {U[j]} \n\n Pivote: {pivote} \n\n U[i, j] = {U[i, j]} \n\n U[i] = {U[i]}")
+        filaReducida = U[j] - ((pivote / U[i, j]) * U[i])
+        U[i] = filaReducida
+        #print(filaReducida)
+    inicioFilaReducir += 1
+    print(U)
+print(A)
+print(U)
+    
