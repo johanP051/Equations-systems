@@ -281,6 +281,10 @@ Si notamos bien, el proceso se hace por cada fila y termina termina cuando las c
 \\
 \begin{lstlisting}[style=jupyter, language=Python, caption={Método para resolver el sistema de ecuaciones}]
     def gauss_jordan(self):
+        inicioFilaSimplificacion = -1
+        finalFilaSimplificacion = self.ecuaciones
+        elementoFilaSimplificacion = -1
+        
         inicioFilaReduccion = 0
         finalFilaReduccion = self.ecuaciones
         filaPivote = -1
